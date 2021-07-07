@@ -29,10 +29,16 @@ docker run -d --restart unless-stopped --name messagedb -e "POSTGRES_PASSWORD=po
 You must run the database migrations to initialise them:
 
 ```
+
+这里需要注意：
+1.   Redis是集群模式, 直接在redis的配置文件里, 把cluster相关的配置 enable 然后重启服务就行了
+2.   postgresql 需要先创建用户名, 配置密码, 然后创建数据库, 配置数据库权限, 具体可以看： https://medium.com/coding-blocks/creating-user-database-and-adding-access-on-postgresql-8bfcd2f4a91e
+3.   项目没有跑起来, 是因为项目里有APN, Google的消息push服务
+
 cd Signal-Server/service/target
-java -jar TextSecureServer-4.97.jar accountdb migrate config.yml
-java -jar TextSecureServer-4.97.jar abusedb migrate config.yml
-java -jar TextSecureServer-4.97.jar messagedb migrate config.yml
+java -jar TextSecureServer-4.97.jar accountdb migrate ../config/config.yml
+java -jar TextSecureServer-4.97.jar abusedb migrate ../config/config.yml
+java -jar TextSecureServer-4.97.jar messagedb migrate ../config/config.yml
 ```
 
 ## Redis
